@@ -3194,6 +3194,17 @@ const STORE_PRODUCTS = [
         description: 'Charcoal mesh back with a stitched front patch featuring the BCC bell logo.',
         badge: 'New Arrival',
         image: 'assets/store-hat.svg'
+        description: 'Soft cotton tee with the Bengal Christian Church logo across the chest.',
+        badge: 'Best Seller',
+        image: 'https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png'
+    },
+    {
+        id: 'comfort-shirt',
+        name: 'Comfort Fit Shirt',
+        price: 26,
+        description: 'Relaxed fit tee, perfect for events and volunteer Sundays.',
+        badge: 'New',
+        image: 'https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png'
     },
     {
         id: 'logo-mug',
@@ -3202,6 +3213,7 @@ const STORE_PRODUCTS = [
         description: '11 oz ceramic mug featuring the church bell and cross logo.',
         badge: 'Morning Favorite',
         image: 'assets/store-mug.svg'
+        image: 'https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png'
     }
 ];
 
@@ -3269,6 +3281,7 @@ function renderCart() {
 
     if (!storeCart.length) {
         cartContainer.innerHTML = '<div class="empty-cart">Your cart is empty. Add a shirt, hat, or mug to get started.</div>';
+        cartContainer.innerHTML = '<div class="empty-cart">Your cart is empty. Add a shirt or mug to get started.</div>';
         updateCartTotals();
         return;
     }
