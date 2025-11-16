@@ -76,6 +76,12 @@
                         <li><a href="#" onclick="showPage('resources'); return false;" id="nav-resources">Resources</a></li>
                         <li><a href="#" onclick="showPage('store'); return false;" id="nav-store">Store</a></li>
                         <li><a href="#" onclick="showPage('gallery'); return false;" id="nav-gallery">Gallery</a></li>
+                        <li><a href="#" onclick="showPage('resources'); return false;" id="nav-resources">Resources</a></li>
+                        <li><a href="#" onclick="showPage('store'); return false;" id="nav-store">Store</a></li>
+                        <li><a href="#" onclick="showPage('gallery'); return false;" id="nav-gallery">Gallery</a></li>
+                        <li><a href="#" onclick="showPage('resources'); return false;" id="nav-resources">Resources</a></li>
+                        <li><a href="#" onclick="showPage('store'); return false;" id="nav-store">Store</a></li>
+                        <li><a href="#" onclick="showPage('gallery'); return false;" id="nav-gallery">Gallery</a></li>
                         <li><a href="#" onclick="showPage('portals'); return false;" id="nav-portals">Portals</a></li>
                         <li><a href="#" onclick="showPage('contact'); return false;" id="nav-contact">Contact</a></li>
                     </ul>
@@ -1419,6 +1425,152 @@
                                     <div class="cart-line"><span>Estimated tax</span><span id="cart-tax">$0.00</span></div>
                                     <div class="cart-line total"><span>Total</span><span id="cart-total">$0.00</span></div>
                                     <p class="cart-footnote">Checkout will be completed in person at the Welcome Desk.</p>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contact-page" class="page-hidden">
+                    <div class="content-section">
+                        <h2>Contact Us</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="store-page" class="page-hidden">
+                    <div class="content-section">
+                        <div class="store-hero">
+                            <div>
+                                <p class="store-eyebrow">Church Merch</p>
+                                <h2>Support Bengal Christian Church</h2>
+                                <p>Grab a cozy tee, mesh hat, or coffee mug with our church logo. Every purchase goes right back into kids ministry, supplies, and community events.</p>
+                                <div class="store-hero-highlights">
+                                    <span>Fast local pickup</span>
+                                    <span>Secure checkout</span>
+                                    <span>Limited run designs</span>
+                                </div>
+                            </div>
+                            <div class="store-hero-logo">
+                                <img src="https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png" alt="Bengal Christian Church logo">
+                                <p>Featured on every item</p>
+                            </div>
+                        </div>
+
+                        <div class="store-layout">
+                            <section class="store-products">
+                                <div class="store-section-header">
+                                    <h3>Shop Items</h3>
+                                    <p>Select your favorites and add them to the cart to see totals update automatically.</p>
+                                </div>
+                                <div class="store-product-grid" id="store-product-grid"></div>
+                            </section>
+
+                            <aside class="cart-panel" aria-label="Shopping cart">
+                                <div class="store-section-header">
+                                    <h3>Shopping Cart</h3>
+                                    <p class="cart-note">Add or remove items to watch your total update instantly.</p>
+                                </div>
+                                <div id="cart-items" class="cart-items"></div>
+                                <div class="cart-summary">
+                                    <div class="cart-line"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
+                                    <div class="cart-line"><span>Estimated tax</span><span id="cart-tax">$0.00</span></div>
+                                    <div class="cart-line total"><span>Total</span><span id="cart-total">$0.00</span></div>
+                                    <button class="btn full-width" type="button" onclick="scrollToPaymentForm()">Proceed to Checkout</button>
+                                    <p class="cart-footnote">This is a demo experience—no payment is collected.</p>
+                                </div>
+                                <div class="payment-panel" id="payment-panel">
+                                    <div class="payment-header">
+                                        <h4>Prototype Payment</h4>
+                                        <p>Use the demo card to simulate checkout. Totals sync with your cart.</p>
+                                    </div>
+                                    <form id="payment-form">
+                                        <div class="form-row">
+                                            <label for="payment-name">Name on card</label>
+                                            <input id="payment-name" name="name" type="text" placeholder="Alex Taylor" required>
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="payment-email">Email for receipt</label>
+                                            <input id="payment-email" name="email" type="email" placeholder="you@example.com" required>
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="payment-card">Card number</label>
+                                            <input id="payment-card" name="card" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" required>
+                                        </div>
+                                        <div class="form-grid">
+                                            <div class="form-row">
+                                                <label for="payment-exp">Exp. date</label>
+                                                <input id="payment-exp" name="exp" type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="12/27" required>
+                                            </div>
+                                            <div class="form-row">
+                                                <label for="payment-cvc">CVC</label>
+                                                <input id="payment-cvc" name="cvc" type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="payment-zip">ZIP / Postal</label>
+                                            <input id="payment-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="46131" required>
+                                        </div>
+                                        <div class="payment-actions">
+                                            <button class="btn ghost" type="button" onclick="prefillDemoCard()">Fill demo card</button>
+                                            <button class="btn" id="payment-submit" type="submit">Submit Payment (Demo)</button>
+                                        </div>
+                                        <p class="payment-status" id="payment-status" aria-live="polite">Cart total is $0.00. Add items to enable payment.</p>
+                                    </form>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contact-page" class="page-hidden">
+                    <div class="content-section">
+                        <h2>Contact Us</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="store-page" class="page-hidden">
+                    <div class="content-section">
+                        <div class="store-hero">
+                            <div>
+                                <p class="store-eyebrow">Church Merch</p>
+                                <h2>Support Bengal Christian Church</h2>
+                                <p>Grab a cozy tee, mesh hat, or coffee mug with our church logo. Every purchase goes right back into kids ministry, supplies, and community events.</p>
+                                <p>Grab a cozy tee or a coffee mug with our church logo. Every purchase goes right back into kids ministry, supplies, and community events.</p>
+                                <div class="store-hero-highlights">
+                                    <span>Fast local pickup</span>
+                                    <span>Secure checkout</span>
+                                    <span>Limited run designs</span>
+                                </div>
+                            </div>
+                            <div class="store-hero-logo">
+                                <img src="https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png" alt="Bengal Christian Church logo">
+                                <p>Featured on every item</p>
+                            </div>
+                        </div>
+
+                        <div class="store-layout">
+                            <section class="store-products">
+                                <div class="store-section-header">
+                                    <h3>Shop Items</h3>
+                                    <p>Select your favorites and add them to the cart to see totals update automatically.</p>
+                                </div>
+                                <div class="store-product-grid" id="store-product-grid"></div>
+                            </section>
+
+                            <aside class="cart-panel" aria-label="Shopping cart">
+                                <div class="store-section-header">
+                                    <h3>Shopping Cart</h3>
+                                    <p class="cart-note">Add or remove items to watch your total update instantly.</p>
+                                </div>
+                                <div id="cart-items" class="cart-items"></div>
+                                <div class="cart-summary">
+                                    <div class="cart-line"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
+                                    <div class="cart-line"><span>Estimated tax</span><span id="cart-tax">$0.00</span></div>
+                                    <div class="cart-line total"><span>Total</span><span id="cart-total">$0.00</span></div>
+                                    <button class="btn full-width" type="button">Proceed to Checkout</button>
+                                    <p class="cart-footnote">This is a demo experience—no payment is collected.</p>
                                 </div>
                             </aside>
                         </div>
