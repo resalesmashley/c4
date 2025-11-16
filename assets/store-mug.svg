@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" role="img" aria-labelledby="title desc">
+  <title id="title">Bengal Christian Church coffee mug</title>
+  <desc id="desc">Illustrated white ceramic coffee mug with the Bengal Christian Church bell logo</desc>
+  <rect width="900" height="700" fill="#f8fafc" rx="24"/>
+  <rect x="120" y="520" width="660" height="120" fill="#1a202c" opacity="0.08" rx="26"/>
+  <g transform="translate(220 180)">
+    <rect x="0" y="40" width="320" height="240" rx="28" fill="#e5e7eb" stroke="#cbd5e0" stroke-width="6"/>
+    <path d="M320 110h40c30 0 60 24 60 70s-30 70-60 70h-40" fill="none" stroke="#1f2937" stroke-width="12" stroke-linecap="round"/>
+    <rect x="70" y="100" width="180" height="120" rx="16" fill="#1e3a8a"/>
+    <rect x="80" y="110" width="160" height="100" rx="12" fill="#60a5fa"/>
+    <path d="M130 186c0-20 12-36 50-36s50 16 50 36" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="180" cy="156" r="16" fill="#f97316" stroke="#0f172a" stroke-width="4"/>
+    <path d="M180 138v12" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M178 160h4" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M156 134h48" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <text x="450" y="600" font-size="36" fill="#2d3748" text-anchor="middle" font-family="'Arial Rounded MT Bold', 'Segoe UI', Arial, sans-serif">11 oz ceramic mug with full-color bell logo</text>
+</svg>
