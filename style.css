@@ -3323,6 +3323,88 @@ body.modal-open {
     margin: 0;
 }
 
+.payment-panel {
+    margin-top: 1.5rem;
+    background: #0f2139;
+    color: #e5ecf5;
+    border: 1px solid #1f3350;
+    border-radius: 16px;
+    padding: 1.25rem 1.25rem 1rem;
+    box-shadow: 0 16px 40px rgba(10, 16, 28, 0.35);
+}
+
+.payment-header h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.payment-header p {
+    margin: 0.25rem 0 1rem;
+    color: #b8c4d9;
+}
+
+.payment-panel form label {
+    display: block;
+    font-weight: 600;
+    color: #e5ecf5;
+    margin-bottom: 0.35rem;
+}
+
+.payment-panel input {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border-radius: 10px;
+    border: 1px solid #2f4668;
+    background: #122746;
+    color: #e5ecf5;
+    font-size: 0.95rem;
+}
+
+.payment-panel input::placeholder {
+    color: #7f8da6;
+}
+
+.form-row {
+    margin-bottom: 0.75rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.payment-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.payment-actions .btn {
+    flex: 1;
+    justify-content: center;
+}
+
+.btn.ghost {
+    background: transparent;
+    color: #0f2139;
+    border: 1px solid #0f2139;
+}
+
+.btn.ghost:hover {
+    background: #0f2139;
+    color: #fff;
+    border-color: #0f2139;
+}
+
+.payment-status {
+    margin-top: 0.75rem;
+    color: #cde7ff;
+    font-size: 0.95rem;
+}
+
 .empty-cart {
     padding: 1rem;
     border: 1px dashed #cbd5e0;
