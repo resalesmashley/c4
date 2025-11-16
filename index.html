@@ -76,6 +76,9 @@
                         <li><a href="#" onclick="showPage('resources'); return false;" id="nav-resources">Resources</a></li>
                         <li><a href="#" onclick="showPage('store'); return false;" id="nav-store">Store</a></li>
                         <li><a href="#" onclick="showPage('gallery'); return false;" id="nav-gallery">Gallery</a></li>
+                        <li><a href="#" onclick="showPage('resources'); return false;" id="nav-resources">Resources</a></li>
+                        <li><a href="#" onclick="showPage('store'); return false;" id="nav-store">Store</a></li>
+                        <li><a href="#" onclick="showPage('gallery'); return false;" id="nav-gallery">Gallery</a></li>
                         <li><a href="#" onclick="showPage('portals'); return false;" id="nav-portals">Portals</a></li>
                         <li><a href="#" onclick="showPage('contact'); return false;" id="nav-contact">Contact</a></li>
                     </ul>
@@ -1459,6 +1462,60 @@
                                         </div>
                                         <p class="payment-status" id="payment-status" aria-live="polite">Cart total is $0.00. Add items to enable payment.</p>
                                     </form>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contact-page" class="page-hidden">
+                    <div class="content-section">
+                        <h2>Contact Us</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="store-page" class="page-hidden">
+                    <div class="content-section">
+                        <div class="store-hero">
+                            <div>
+                                <p class="store-eyebrow">Church Merch</p>
+                                <h2>Support Bengal Christian Church</h2>
+                                <p>Grab a cozy tee, mesh hat, or coffee mug with our church logo. Every purchase goes right back into kids ministry, supplies, and community events.</p>
+                                <p>Grab a cozy tee or a coffee mug with our church logo. Every purchase goes right back into kids ministry, supplies, and community events.</p>
+                                <div class="store-hero-highlights">
+                                    <span>Fast local pickup</span>
+                                    <span>Secure checkout</span>
+                                    <span>Limited run designs</span>
+                                </div>
+                            </div>
+                            <div class="store-hero-logo">
+                                <img src="https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png" alt="Bengal Christian Church logo">
+                                <p>Featured on every item</p>
+                            </div>
+                        </div>
+
+                        <div class="store-layout">
+                            <section class="store-products">
+                                <div class="store-section-header">
+                                    <h3>Shop Items</h3>
+                                    <p>Select your favorites and add them to the cart to see totals update automatically.</p>
+                                </div>
+                                <div class="store-product-grid" id="store-product-grid"></div>
+                            </section>
+
+                            <aside class="cart-panel" aria-label="Shopping cart">
+                                <div class="store-section-header">
+                                    <h3>Shopping Cart</h3>
+                                    <p class="cart-note">Add or remove items to watch your total update instantly.</p>
+                                </div>
+                                <div id="cart-items" class="cart-items"></div>
+                                <div class="cart-summary">
+                                    <div class="cart-line"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
+                                    <div class="cart-line"><span>Estimated tax</span><span id="cart-tax">$0.00</span></div>
+                                    <div class="cart-line total"><span>Total</span><span id="cart-total">$0.00</span></div>
+                                    <button class="btn full-width" type="button">Proceed to Checkout</button>
+                                    <p class="cart-footnote">This is a demo experience—no payment is collected.</p>
                                 </div>
                             </aside>
                         </div>

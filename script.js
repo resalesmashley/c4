@@ -396,6 +396,11 @@ function showPage(pageName) {
                      'resources', 'store', 'gallery', 'portals', 'parent-portal', 'teacher-portal',
                      'contact', 'parent-dashboard', 'teacher-dashboard', 'lesson-plan-builder',
                      'resource-library', 'teacher-messages', 'admin-dashboard'];
+function showPage(pageName) {
+    const pageIds = ['home', 'about', 'staff', 'prek', 'elementary', 'events', 'volunteer',
+                     'resources', 'store', 'gallery', 'portals', 'parent-portal', 'teacher-portal',
+                     'contact', 'parent-dashboard', 'teacher-dashboard', 'lesson-plan-builder',
+                     'resource-library', 'teacher-messages', 'admin-dashboard'];
     
     pageIds.forEach(page => {
         const element = document.getElementById(page + '-page');
@@ -438,6 +443,14 @@ function showPage(pageName) {
         'store': 'Church Store',
         'contact': 'Contact Us'
     };
+        'lesson-plan-builder': 'New Lesson Plan',
+        'resource-library': 'Resource Library',
+        'teacher-messages': 'Messages',
+        'admin-dashboard': 'Admin Control Center',
+        'admin-parent-management': 'Parent Accounts',
+        'store': 'Church Store',
+        'contact': 'Contact Us'
+    };
 
     const breadcrumb = document.getElementById('breadcrumbCurrent');
     if (breadcrumb && breadcrumbMap[pageName]) {
@@ -458,6 +471,11 @@ function showPage(pageName) {
     // On loading teacher-dashboard, re-render the lesson list
     if (pageName === 'teacher-dashboard') {
         renderLessonPlans();
+    }
+
+    if (pageName === 'store') {
+        renderStoreProducts();
+        renderCart();
     }
 
     if (pageName === 'store') {
@@ -3400,4 +3418,168 @@ document.addEventListener('DOMContentLoaded', () => {
     if (paymentForm) {
         paymentForm.addEventListener('submit', handlePaymentSubmit);
     }
+});
+    // Use API controller to send message
+    ParentPortalController.sendParentMessage(messageText, 'teacher-001').catch(error => {
+        console.error('Chat submission failed:', error);
+    });
+}
+
+// --- Church Storefront ---
+const STORE_PRODUCTS = [
+    {
+        id: 'classic-shirt',
+        name: 'Classic Logo Shirt',
+        price: 22,
+        description: 'Soft cotton tee with the Bengal Christian Church bell-and-cross logo across the chest.',
+        badge: 'Best Seller',
+        image: 'assets/store-shirt.svg'
+    },
+    {
+        id: 'trucker-hat',
+        name: 'Mesh Trucker Hat',
+        price: 24,
+        description: 'Charcoal mesh back with a stitched front patch featuring the BCC bell logo.',
+        badge: 'New Arrival',
+        image: 'assets/store-hat.svg'
+        description: 'Soft cotton tee with the Bengal Christian Church logo across the chest.',
+        badge: 'Best Seller',
+        image: 'https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png'
+    },
+    {
+        id: 'comfort-shirt',
+        name: 'Comfort Fit Shirt',
+        price: 26,
+        description: 'Relaxed fit tee, perfect for events and volunteer Sundays.',
+        badge: 'New',
+        image: 'https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png'
+    },
+    {
+        id: 'logo-mug',
+        name: 'Logo Coffee Mug',
+        price: 14,
+        description: '11 oz ceramic mug featuring the church bell and cross logo.',
+        badge: 'Morning Favorite',
+        image: 'assets/store-mug.svg'
+        image: 'https://dq5pwpg1q8ru0.cloudfront.net/2022/03/21/13/04/05/a0e79060-864a-4123-b4b7-61497f467ebe/Website-Color-Horizontal%25406x.png'
+    }
+];
+
+let storeCart = [];
+
+function formatCurrency(amount) {
+    return `$${amount.toFixed(2)}`;
+}
+
+function getProductById(productId) {
+    return STORE_PRODUCTS.find(product => product.id === productId);
+}
+
+function renderStoreProducts() {
+    const grid = document.getElementById('store-product-grid');
+    if (!grid) return;
+
+    grid.innerHTML = STORE_PRODUCTS.map(product => `
+        <article class="product-card">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+                ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+            </div>
+            <div class="product-details">
+                <h4>${product.name}</h4>
+                <p>${product.description}</p>
+                <div class="product-meta">
+                    <span class="product-price">${formatCurrency(product.price)}</span>
+                    <button class="btn" type="button" onclick="addToCart('${product.id}')">Add to Cart</button>
+                </div>
+            </div>
+        </article>
+    `).join('');
+}
+
+function addToCart(productId) {
+    const existingItem = storeCart.find(item => item.productId === productId);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        storeCart.push({ productId, quantity: 1 });
+    }
+    renderCart();
+}
+
+function updateCartQuantity(productId, delta) {
+    const item = storeCart.find(entry => entry.productId === productId);
+    if (!item) return;
+
+    item.quantity += delta;
+    if (item.quantity <= 0) {
+        storeCart = storeCart.filter(entry => entry.productId !== productId);
+    }
+    renderCart();
+}
+
+function removeFromCart(productId) {
+    storeCart = storeCart.filter(item => item.productId !== productId);
+    renderCart();
+}
+
+function renderCart() {
+    const cartContainer = document.getElementById('cart-items');
+    if (!cartContainer) return;
+
+    if (!storeCart.length) {
+        cartContainer.innerHTML = '<div class="empty-cart">Your cart is empty. Add a shirt, hat, or mug to get started.</div>';
+        cartContainer.innerHTML = '<div class="empty-cart">Your cart is empty. Add a shirt or mug to get started.</div>';
+        updateCartTotals();
+        return;
+    }
+
+    cartContainer.innerHTML = storeCart.map(item => {
+        const product = getProductById(item.productId);
+        if (!product) return '';
+
+        return `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <strong>${product.name}</strong>
+                    <p>${formatCurrency(product.price)} each</p>
+                </div>
+                <div class="cart-actions">
+                    <div class="quantity-controls" aria-label="Quantity for ${product.name}">
+                        <button type="button" onclick="updateCartQuantity('${product.id}', -1)" aria-label="Decrease quantity">−</button>
+                        <span>${item.quantity}</span>
+                        <button type="button" onclick="updateCartQuantity('${product.id}', 1)" aria-label="Increase quantity">+</button>
+                    </div>
+                    <div class="cart-item-total">${formatCurrency(product.price * item.quantity)}</div>
+                    <button class="text-link" type="button" onclick="removeFromCart('${product.id}')">Remove</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    updateCartTotals();
+}
+
+function updateCartTotals() {
+    const subtotal = storeCart.reduce((sum, item) => {
+        const product = getProductById(item.productId);
+        return product ? sum + product.price * item.quantity : sum;
+    }, 0);
+
+    const tax = subtotal * 0.07;
+    const total = subtotal + tax;
+
+    const subtotalEl = document.getElementById('cart-subtotal');
+    const taxEl = document.getElementById('cart-tax');
+    const totalEl = document.getElementById('cart-total');
+
+    if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
+    if (taxEl) taxEl.textContent = formatCurrency(tax);
+    if (totalEl) totalEl.textContent = formatCurrency(total);
+}
+
+// Initialize store UI when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    renderStoreProducts();
+    renderCart();
 });
