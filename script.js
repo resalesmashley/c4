@@ -392,9 +392,9 @@ let currentSubcategories = [];
 
 // Page Navigation
 function showPage(pageName) {
-    const pageIds = ['home', 'about', 'staff', 'prek', 'elementary', 'events', 'volunteer', 
-                     'resources', 'gallery', 'portals', 'parent-portal', 'teacher-portal', 
-                     'contact', 'parent-dashboard', 'teacher-dashboard', 'lesson-plan-builder', 
+    const pageIds = ['home', 'about', 'staff', 'prek', 'elementary', 'events', 'volunteer',
+                     'resources', 'store', 'gallery', 'portals', 'parent-portal', 'teacher-portal',
+                     'contact', 'parent-dashboard', 'teacher-dashboard', 'lesson-plan-builder',
                      'resource-library', 'teacher-messages', 'admin-dashboard'];
     
     pageIds.forEach(page => {
@@ -435,6 +435,7 @@ function showPage(pageName) {
         'teacher-messages': 'Messages',
         'admin-dashboard': 'Admin Control Center',
         'admin-parent-management': 'Parent Accounts',
+        'store': 'Church Store',
         'contact': 'Contact Us'
     };
 
@@ -457,6 +458,11 @@ function showPage(pageName) {
     // On loading teacher-dashboard, re-render the lesson list
     if (pageName === 'teacher-dashboard') {
         renderLessonPlans();
+    }
+
+    if (pageName === 'store') {
+        renderStoreProducts();
+        renderCart();
     }
 
     if (pageName === 'admin-dashboard') {
@@ -3170,3 +3176,228 @@ function handleParentChatSubmit() {
         console.error('Chat submission failed:', error);
     });
 }
+
+// --- Church Storefront ---
+const STORE_PRODUCTS = [
+    {
+        id: 'classic-shirt',
+        name: 'Classic Logo Shirt',
+        price: 22,
+        description: 'Soft cotton tee with the Bengal Christian Church bell-and-cross logo across the chest.',
+        badge: 'Best Seller',
+        image: 'assets/store-shirt.svg'
+    },
+    {
+        id: 'trucker-hat',
+        name: 'Mesh Trucker Hat',
+        price: 24,
+        description: 'Charcoal mesh back with a stitched front patch featuring the BCC bell logo.',
+        badge: 'New Arrival',
+        image: 'assets/store-hat.svg'
+    },
+    {
+        id: 'logo-mug',
+        name: 'Logo Coffee Mug',
+        price: 14,
+        description: '11 oz ceramic mug featuring the church bell and cross logo.',
+        badge: 'Morning Favorite',
+        image: 'assets/store-mug.svg'
+    }
+];
+
+let storeCart = [];
+
+function formatCurrency(amount) {
+    return `$${amount.toFixed(2)}`;
+}
+
+function getCartTotals() {
+    const subtotal = storeCart.reduce((sum, item) => {
+        const product = getProductById(item.productId);
+        return product ? sum + product.price * item.quantity : sum;
+    }, 0);
+
+    const tax = subtotal * 0.07;
+    const total = subtotal + tax;
+
+    return { subtotal, tax, total };
+}
+
+function getProductById(productId) {
+    return STORE_PRODUCTS.find(product => product.id === productId);
+}
+
+function renderStoreProducts() {
+    const grid = document.getElementById('store-product-grid');
+    if (!grid) return;
+
+    grid.innerHTML = STORE_PRODUCTS.map(product => `
+        <article class="product-card">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}">
+                ${product.badge ? `<span class="product-badge">${product.badge}</span>` : ''}
+            </div>
+            <div class="product-details">
+                <h4>${product.name}</h4>
+                <p>${product.description}</p>
+                <div class="product-meta">
+                    <span class="product-price">${formatCurrency(product.price)}</span>
+                    <button class="btn" type="button" onclick="addToCart('${product.id}')">Add to Cart</button>
+                </div>
+            </div>
+        </article>
+    `).join('');
+}
+
+function addToCart(productId) {
+    const existingItem = storeCart.find(item => item.productId === productId);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        storeCart.push({ productId, quantity: 1 });
+    }
+    renderCart();
+}
+
+function updateCartQuantity(productId, delta) {
+    const item = storeCart.find(entry => entry.productId === productId);
+    if (!item) return;
+
+    item.quantity += delta;
+    if (item.quantity <= 0) {
+        storeCart = storeCart.filter(entry => entry.productId !== productId);
+    }
+    renderCart();
+}
+
+function removeFromCart(productId) {
+    storeCart = storeCart.filter(item => item.productId !== productId);
+    renderCart();
+}
+
+function renderCart() {
+    const cartContainer = document.getElementById('cart-items');
+    if (!cartContainer) return;
+
+    if (!storeCart.length) {
+        cartContainer.innerHTML = '<div class="empty-cart">Your cart is empty. Add a shirt, hat, or mug to get started.</div>';
+        updateCartTotals();
+        updatePaymentStatus();
+        return;
+    }
+
+    cartContainer.innerHTML = storeCart.map(item => {
+        const product = getProductById(item.productId);
+        if (!product) return '';
+
+        return `
+            <div class="cart-item">
+                <div class="cart-item-info">
+                    <strong>${product.name}</strong>
+                    <p>${formatCurrency(product.price)} each</p>
+                </div>
+                <div class="cart-actions">
+                    <div class="quantity-controls" aria-label="Quantity for ${product.name}">
+                        <button type="button" onclick="updateCartQuantity('${product.id}', -1)" aria-label="Decrease quantity">−</button>
+                        <span>${item.quantity}</span>
+                        <button type="button" onclick="updateCartQuantity('${product.id}', 1)" aria-label="Increase quantity">+</button>
+                    </div>
+                    <div class="cart-item-total">${formatCurrency(product.price * item.quantity)}</div>
+                    <button class="text-link" type="button" onclick="removeFromCart('${product.id}')">Remove</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    updateCartTotals();
+    updatePaymentStatus();
+}
+
+function updateCartTotals() {
+    const { subtotal, tax, total } = getCartTotals();
+
+    const subtotalEl = document.getElementById('cart-subtotal');
+    const taxEl = document.getElementById('cart-tax');
+    const totalEl = document.getElementById('cart-total');
+
+    if (subtotalEl) subtotalEl.textContent = formatCurrency(subtotal);
+    if (taxEl) taxEl.textContent = formatCurrency(tax);
+    if (totalEl) totalEl.textContent = formatCurrency(total);
+}
+
+function scrollToPaymentForm() {
+    const panel = document.getElementById('payment-panel');
+    if (panel) {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function prefillDemoCard() {
+    const nameInput = document.getElementById('payment-name');
+    const emailInput = document.getElementById('payment-email');
+    const cardInput = document.getElementById('payment-card');
+    const expInput = document.getElementById('payment-exp');
+    const cvcInput = document.getElementById('payment-cvc');
+    const zipInput = document.getElementById('payment-zip');
+
+    if (nameInput) nameInput.value = 'Alex Taylor';
+    if (emailInput) emailInput.value = 'alex.taylor@example.com';
+    if (cardInput) cardInput.value = '4242 4242 4242 4242';
+    if (expInput) expInput.value = '12/27';
+    if (cvcInput) cvcInput.value = '123';
+    if (zipInput) zipInput.value = '46131';
+
+    updatePaymentStatus('Demo card filled. Submit to simulate payment.');
+}
+
+function updatePaymentStatus(message) {
+    const statusEl = document.getElementById('payment-status');
+    if (!statusEl) return;
+
+    const { total } = getCartTotals();
+    const defaultMessage = total > 0
+        ? `Cart total is ${formatCurrency(total)}. Enter details to run the demo payment.`
+        : 'Cart total is $0.00. Add items to enable payment.';
+
+    statusEl.textContent = message || defaultMessage;
+}
+
+function handlePaymentSubmit(event) {
+    event.preventDefault();
+
+    const submitButton = document.getElementById('payment-submit');
+    const { total, subtotal } = getCartTotals();
+
+    if (!storeCart.length) {
+        updatePaymentStatus('Add at least one item to the cart before paying.');
+        return;
+    }
+
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Processing...';
+    }
+
+    updatePaymentStatus(`Processing secure demo payment for ${formatCurrency(total)} (includes $${(total - subtotal).toFixed(2)} tax)...`);
+
+    setTimeout(() => {
+        const orderNumber = `BCC-${Math.floor(Math.random() * 90000 + 10000)}`;
+        updatePaymentStatus(`Payment approved! Confirmation #${orderNumber}. A receipt would be emailed for ${formatCurrency(total)}.`);
+
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Submit Payment (Demo)';
+        }
+    }, 900);
+}
+
+// Initialize store UI when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    renderStoreProducts();
+    renderCart();
+
+    const paymentForm = document.getElementById('payment-form');
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', handlePaymentSubmit);
+    }
+});
