@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" role="img" aria-labelledby="title desc">
+  <title id="title">Bengal Christian Church hat</title>
+  <desc id="desc">Illustrated charcoal mesh trucker hat with the Bengal Christian Church bell logo</desc>
+  <defs>
+    <linearGradient id="mesh" x1="0%" x2="100%" y1="0%" y2="0%">
+      <stop offset="0%" stop-color="#4a5568" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#2d3748" stop-opacity="0.95"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="700" fill="#f5f7fb" rx="24"/>
+  <rect x="60" y="520" width="780" height="120" fill="#1a202c" opacity="0.08" rx="30"/>
+  <path d="M130 430c20-180 190-260 320-260s300 80 320 260c-120 40-520 40-640 0z" fill="#2d3748"/>
+  <path d="M150 430c18-160 170-240 300-240s280 80 300 240c-112 30-488 30-600 0z" fill="url(#mesh)"/>
+  <path d="M180 430c18-140 150-210 270-210s240 70 260 210c-108 24-442 24-530 0z" fill="#111827" opacity="0.25"/>
+  <rect x="320" y="360" width="260" height="120" rx="32" fill="#edf2f7" stroke="#cbd5e0" stroke-width="6"/>
+  <g transform="translate(360 380)">
+    <rect width="180" height="80" rx="14" fill="#1e3a8a"/>
+    <rect x="10" y="10" width="160" height="60" rx="10" fill="#60a5fa"/>
+    <path d="M50 64c0-20 10-34 40-34s40 14 40 34" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="90" cy="40" r="16" fill="#f97316" stroke="#0f172a" stroke-width="4"/>
+    <path d="M90 22v12" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M88 44h4" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+    <path d="M66 18h48" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <text x="450" y="590" font-size="36" fill="#2d3748" text-anchor="middle" font-family="'Arial Rounded MT Bold', 'Segoe UI', Arial, sans-serif">Mesh trucker hat with stitched logo</text>
+</svg>
